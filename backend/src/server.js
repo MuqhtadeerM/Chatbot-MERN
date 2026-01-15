@@ -6,12 +6,19 @@ dotenv.config();
 import express from "express";
 import connectDB from "./config/db.js";
 import { ENV } from "./config/env.js";
+import authRoutes from "./routes/auth.routes.js";
 
 // create express app
 const app = express();
 
+// middleware ahndler
+app.use(express.json());
+
 // connect to db
 connectDB();
+
+// routes
+app.use("/api/auth", authRoutes);
 
 // create the test route
 app.get("/", (req, res) => {
