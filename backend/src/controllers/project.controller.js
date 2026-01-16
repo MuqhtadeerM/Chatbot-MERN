@@ -82,3 +82,80 @@ export const getProjectById = async (req, res) => {
     });
   }
 };
+
+// update the project using id
+export const updateProject = async (req, res) => {
+  try {
+    //  get project id from params
+    const projectId = req.params.id;
+
+    //  get loged in user id
+    const userId = req.user.userId;
+
+    //   get updated fields from body
+    const { name, systemPrompt } = req.body;
+
+    // find the project and ensure the ownership
+    const project = await Project.findOneAndUpdate(
+      {
+        _id: projectId,
+        userId,
+      },
+      { name, systemPrompt },
+      { new: true } // return updated docs
+    );
+
+    // if project found or not
+    if (!project) {
+      return res.status(404).json({
+        message: "Not found project or not authorized",
+        error: error.message,
+      });
+    }
+
+    // send response
+    res.status(200).json({
+      message: "project updated succssfully",
+      project,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "failed to update project",
+      error: error.message,
+    });
+  }
+};
+
+// delete project
+export const deleteProject = async (req, res) => {
+  try {
+    // get project id from params
+    const projectId = req.params.id;
+
+    // get loggedin user idd from token
+    const userId = req.user.userId;
+
+    // find the peojct and ensure the ownership then delete
+    const project = await Project.findOneAndDelete({
+      _id: projectId,
+      userId,
+    });
+
+    //if project not found or not owned
+    if (!project) {
+      return res.status(404).json({
+        message: "project not found or not authorixed",
+      });
+    }
+
+    // sucss response
+    res.status(200).json({
+      message: "Project deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "failed to delete",
+      error: error.message,
+    });
+  }
+};
