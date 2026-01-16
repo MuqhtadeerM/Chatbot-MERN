@@ -28,6 +28,7 @@ export const createProject = async (req, res) => {
   }
 };
 
+// get the user data by id
 export const getUserProjects = async (req, res) => {
   try {
     // get logged in userId from token
@@ -43,6 +44,40 @@ export const getUserProjects = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "failed to fetch",
+      error: error.message,
+    });
+  }
+};
+
+// get the project by id
+export const getProjectById = async (req, res) => {
+  try {
+    // get project id using url
+    const projectId = req.params.id;
+
+    // get userID from token
+    const userId = req.user.userId;
+
+    // find project by id
+    const project = await Project.findOne({
+      _id: projectId,
+      userId: userId,
+    });
+
+    //  if not found project
+    if (!project) {
+      return res.status(404).json({
+        message: "not Found project",
+      });
+    }
+
+    // sending response
+    res.status(200).json({
+      project,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "failed to fetch project",
       error: error.message,
     });
   }
