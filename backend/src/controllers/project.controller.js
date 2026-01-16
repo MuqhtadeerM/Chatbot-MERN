@@ -27,3 +27,23 @@ export const createProject = async (req, res) => {
     });
   }
 };
+
+export const getUserProjects = async (req, res) => {
+  try {
+    // get logged in userId from token
+    const userId = req.user.userId;
+
+    // find the project below
+    const projects = await Project.find({ userId });
+
+    // send response
+    res.status(200).json({
+      projects,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "failed to fetch",
+      error: error.message,
+    });
+  }
+};
