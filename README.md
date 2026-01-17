@@ -194,7 +194,7 @@ If you found this helpful, please star this repository and share it with others 
 ## 👨‍💻 Author
 
 **Muhammed Muqhtadeer**
-Final Year CSE Student | Full Stack Developer | AI Engineer
+CSE Graduate | Full Stack Developer | AI Engineer
 
 ---
 
