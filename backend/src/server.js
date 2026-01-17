@@ -4,6 +4,7 @@ dotenv.config();
 
 // importing express
 import express from "express";
+import cors from "cors";
 import connectDB from "./config/db.js";
 import { ENV } from "./config/env.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -13,6 +14,13 @@ import chatRoutes from "./routes/chat.routes.js";
 
 // create express app
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 // middleware ahndler
 app.use(express.json());
