@@ -9,6 +9,7 @@ import { ENV } from "./config/env.js";
 import authRoutes from "./routes/auth.routes.js";
 import protectedRoutes from "./routes/protected.routes.js";
 import projectRoutes from "./routes/project.routes.js";
+import chatRoutes from "./routes/chat.routes.js";
 
 // create express app
 const app = express();
@@ -23,6 +24,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/chat", chatRoutes);
 
 // create the test route
 app.get("/", (req, res) => {
